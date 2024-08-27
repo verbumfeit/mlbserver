@@ -192,9 +192,9 @@ let port = argv.port || 9999
 let multiview_port = argv.multiview_port || port + 1
 session.setPorts(port, multiview_port)
 app.listen(port, function(addr) {
-  session.log(appname + ' started at http://' + addr)
+  session.log(appname + ' started at https://' + addr)
   session.debuglog('multiview port ' + multiview_port)
-  session.debuglog('multiview server started at http://' + addr.replace(':' + port, ':' + multiview_port) + multiview_url_path)
+  session.debuglog('multiview server started at https://' + addr.replace(':' + port, ':' + multiview_port) + multiview_url_path)
   if (ffmpegEncoder == defaultEncoder) {
     session.debuglog('warning: multiview is set to use software encoding -- see the readme for how to configure hardware encoding (to reduce multiview CPU usage and improve multiview performance)')
   }
@@ -225,7 +225,7 @@ app.get('/clearcache', async function(req, res) {
     session.clear_session_data()
     session = new sessionClass(argv)
 
-    let server = 'http://' + req.headers.host
+    let server = 'https://' + req.headers.host
     res.redirect(server)
   } catch (e) {
     session.log('clearcache request error : ' + e.message)
@@ -1223,7 +1223,7 @@ app.get('/', async function(req, res) {
 
     session.requestlog('homepage', req)
 
-    let server = 'http://' + req.headers.host
+    let server = 'https://' + req.headers.host
     let multiview_server = server.replace(':' + session.data.port, ':' + session.data.multiviewPort)
 
     let gameDate = session.liveDate()
@@ -2309,7 +2309,7 @@ app.get('/advanced.html', async function(req, res) {
 
   session.requestlog('advanced.html', req)
 
-  let server = 'http://' + req.headers.host
+  let server = 'https://' + req.headers.host
 
   let video_url = '/stream.m3u8'
   if ( req.query.src ) {
@@ -2332,7 +2332,7 @@ app.get('/chromecast.html', async function(req, res) {
 
   session.requestlog('chromecast.html', req)
 
-  let server = 'http://' + req.headers.host
+  let server = 'https://' + req.headers.host
 
   let video_url = '/stream.m3u8'
   if ( req.query.src ) {
@@ -2369,7 +2369,7 @@ app.get('/channels.m3u', async function(req, res) {
     excludeTeams = req.query.excludeTeams.toUpperCase().split(',')
   }
 
-  let server = 'http://' + req.headers.host
+  let server = 'https://' + req.headers.host
 
   let resolution = 'best'
   if ( req.query.resolution ) {
@@ -2448,7 +2448,7 @@ app.get('/calendar.ics', async function(req, res) {
       includeTeamsInTitles = req.query.includeTeamsInTitles
     }
 
-    let server = 'http://' + req.headers.host
+    let server = 'https://' + req.headers.host
 
     var body = await session.getTVData('calendar', mediaType, includeTeams, excludeTeams, includeLevels, includeOrgs, server, includeBlackouts, includeTeamsInTitles)
 
@@ -2501,7 +2501,7 @@ app.get('/guide.xml', async function(req, res) {
     includeTeamsInTitles = req.query.includeTeamsInTitles
   }
 
-  let server = 'http://' + req.headers.host
+  let server = 'https://' + req.headers.host
 
   var body = await session.getTVData('guide', mediaType, includeTeams, excludeTeams, includeLevels, includeOrgs, server, includeBlackouts, includeTeamsInTitles)
 
@@ -2863,7 +2863,7 @@ app.get('/kodi.strm', async function(req, res) {
   try {
     session.requestlog('kodi.strm', req)
 
-    let server = 'http://' + req.headers.host
+    let server = 'https://' + req.headers.host
 
     let video_url = '/stream.m3u8'
     let file_name = 'kodi'
